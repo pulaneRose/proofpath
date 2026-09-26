@@ -10,6 +10,17 @@ export const connectDB = async () => {
 
   const uri = process.env.MONGODB_URI;
 
+  // On Vercel / production, connect directly to MongoDB Atlas
+  if (process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME) {
+    if (!uri || uri.trim() === '') {
+      throw new Error('MONGODB_URI environment variable is required on Vercel.');
+    }
+    console.log('Connecting to MongoDB Atlas on Vercel...');
+    await mongoose.connect(uri, { serverSelectionTimeoutMS: 10000 });
+    console.log(`Connected to MongoDB Atlas: ${mongoose.connection.host}`);
+    return;
+  }
+
   if (uri && uri.trim() !== '') {
     try {
       console.log('Connecting to MongoDB Atlas / configured URI...');

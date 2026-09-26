@@ -83,9 +83,14 @@ export const startServer = async (port = PORT) => {
   }
 };
 
-// Only automatically start the server if not running in a test suite or if directly executed
-const isRunningInTest = process.env.NODE_ENV === 'test' || (process.argv[1] && process.argv[1].includes('test'));
-if (!isRunningInTest) {
+// Only automatically start the server if not running in a test suite, Vercel serverless, or Lambda
+const isServerlessOrTest =
+  process.env.NODE_ENV === 'test' ||
+  Boolean(process.env.VERCEL) ||
+  Boolean(process.env.AWS_LAMBDA_FUNCTION_NAME) ||
+  (process.argv[1] && process.argv[1].includes('test'));
+
+if (!isServerlessOrTest) {
   startServer();
 }
 
