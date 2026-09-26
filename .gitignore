@@ -1,0 +1,30 @@
+# Node dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Production builds
+client/dist/
+
+# Environment secrets
+.env
+.env.*
+server/.env
+server/.env.*
+client/.env
+client/.env.*
+*.env.local
+
+# Stored evidence binaries (keep folder structure)
+server/storage/evidence/*
+!server/storage/evidence/.gitkeep
+
+# Vercel deployment
+.vercel/
+
+# Operating system / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
